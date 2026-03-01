@@ -1,0 +1,184 @@
+# Restaurant Website — Implementation Plan
+
+A premium restaurant landing site built with **Next.js 14 App Router**, **Tailwind CSS**, **React Three Fiber**, and **Framer Motion** — featuring a 3D hero scene, scroll-triggered animations, reservation system, and a protected admin dashboard.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 14 (App Router), React 18 |
+| Styling | Tailwind CSS v3, custom CSS vars |
+| 3D | React Three Fiber + Drei + Three.js |
+| Animations | Framer Motion |
+| Backend | Next.js API Routes (no separate Express needed) |
+| Data Store | JSON file DB via `fs` (easily swappable to Postgres/MongoDB) |
+| Auth | JWT stored in HTTP-only cookie (admin only) |
+| Fonts | Google Fonts — Playfair Display + Inter |
+| Deploy | Vercel (frontend + API routes) |
+
+---
+
+## Folder Structure
+
+```
+Restaurant Site/
+├── app/
+│   ├── layout.tsx              # Root layout, fonts, Navbar, Footer
+│   ├── page.tsx                # Home page
+│   ├── menu/page.tsx           # Menu page
+│   ├── reservations/page.tsx   # Reservations booking page
+│   ├── contact/page.tsx        # Contact & Location page
+│   ├── admin/
+│   │   ├── login/page.tsx      # Admin login
+│   │   └── dashboard/page.tsx  # Admin CRUD dashboard (protected)
+│   └── api/
+│       ├── reservations/route.ts   # POST reservation
+│       ├── menu/route.ts           # GET menu items
+│       └── admin/
+│           ├── login/route.ts      # Admin auth (POST)
+│           ├── menu/route.ts       # Admin CRUD (GET/POST/PUT/DELETE)
+│           └── reservations/route.ts # Admin view reservations
+├── components/
+│   ├── Navbar.tsx
+│   ├── Footer.tsx
+│   ├── PageTransition.tsx      # Framer Motion wrapper
+│   ├── SectionReveal.tsx       # Scroll-triggered reveal HOC
+│   ├── HeroScene.tsx           # React Three Fiber 3D scene
+│   ├── MenuCard.tsx
+│   ├── ReservationForm.tsx
+│   └── admin/
+│       ├── MenuEditor.tsx
+│       └── ReservationViewer.tsx
+├── data/
+│   ├── menu.json               # Persistent menu data (seed data included)
+│   └── reservations.json       # Stored reservations
+├── lib/
+│   ├── db.ts                   # JSON file read/write helpers
+│   └── auth.ts                 # JWT sign/verify helpers
+├── public/
+│   └── assets/                 # Static images / placeholder model
+├── tailwind.config.ts
+├── next.config.ts
+└── package.json
+```
+
+---
+
+## Proposed Changes
+
+### Core Setup
+
+#### [NEW] package.json — Dependencies
+- `next`, `react`, `react-dom`
+- `@react-three/fiber`, `@react-three/drei`, `three`
+- `framer-motion`
+- `tailwindcss`, `postcss`, `autoprefixer`
+- `jsonwebtoken`, `bcryptjs`, `cookie`
+- `@types/*` for TypeScript
+
+---
+
+### Pages & Components
+
+#### [NEW] app/layout.tsx
+Root layout: imports Playfair Display + Inter from Google Fonts, wraps `<body>` with `Navbar` and `Footer`, adds a `PageTransition` Framer Motion wrapper.
+
+#### [NEW] app/page.tsx — Home
+- **Hero section**: full-viewport with `HeroScene` (R3F).  3D rotating food bowl/plate model with scroll-linked Y-rotation using `useScroll` from Drei.  Floating ambient particles.  Headline text fades in on load.
+- **About teaser**: stitch-style overlapping layered cards with `SectionReveal`.
+- **Featured dishes**: 3-column card grid with hover lift + image zoom effect.
+- **CTA banner**: parallax background with booking prompt.
+
+#### [NEW] components/HeroScene.tsx
+React Three Fiber canvas with:
+- A custom `<FloatingDish>` mesh (torus-knot placeholder, replaceable with GLTF)
+- `useScroll` hook → maps scroll offset to mesh rotation
+- Ambient + point lights with warm restaurant tones
+- `OrbitControls` (damping only, auto-rotate) via Drei
+- Postprocessing: bloom effect via `@react-three/postprocessing`
+
+#### [NEW] app/menu/page.tsx
+- Category tabs (Starters, Mains, Desserts, Drinks) with Framer Motion `AnimatePresence` for item grid transitions
+- Each `MenuCard` has: image, name, price, description, dietary tags
+- Fetch from `/api/menu`
+
+#### [NEW] app/reservations/page.tsx
+- Multi-step form: Step 1 (date/time/guests) → Step 2 (name/phone/email/notes)
+- Framer Motion step transitions (slide left/right)
+- Submit → POST `/api/reservations` → success animation (checkmark Lottie / CSS)
+
+#### [NEW] app/contact/page.tsx
+- Animated contact info cards (phone, email, address) with staggered slide-in
+- Google Maps embed
+- Contact form with motion
+
+#### [NEW] app/admin/login/page.tsx
+- Clean centered login form
+- POST to `/api/admin/login`, set JWT cookie, redirect to `/admin/dashboard`
+
+#### [NEW] app/admin/dashboard/page.tsx
+- Server-side JWT cookie check (redirect if not authenticated)
+- Tab UI: Menu Management | Reservations
+- `MenuEditor`: add/edit/delete dishes, optimistic UI updates
+- `ReservationViewer`: list all reservations with status
+
+---
+
+### API Routes
+
+#### [NEW] app/api/menu/route.ts — `GET /api/menu`
+Returns all menu items from `data/menu.json`
+
+#### [NEW] app/api/reservations/route.ts — `POST /api/reservations`
+Validates input, appends to `data/reservations.json`, returns 201
+
+#### [NEW] app/api/admin/login/route.ts — `POST /api/admin/login`
+Checks credentials (env vars `ADMIN_USER`, `ADMIN_PASS`), signs JWT, sets `HttpOnly` cookie
+
+#### [NEW] app/api/admin/menu/route.ts — `GET/POST/PUT/DELETE /api/admin/menu`
+Full CRUD on `data/menu.json` — protected by JWT middleware
+
+#### [NEW] app/api/admin/reservations/route.ts — `GET /api/admin/reservations`
+Returns all reservations — protected
+
+---
+
+### Data & Auth
+
+#### [NEW] data/menu.json
+Seed data with 12 menu items across 4 categories
+
+#### [NEW] data/reservations.json
+Empty array initially, written to by the POST API
+
+#### [NEW] lib/auth.ts
+`signToken(payload)` and `verifyToken(token)` using `jsonwebtoken`
+
+#### [NEW] lib/db.ts
+`readJSON(file)` and `writeJSON(file, data)` helpers using Node `fs`
+
+---
+
+## Verification Plan
+
+### Automated
+- `npm run build` — must succeed with 0 TypeScript errors
+- `npm run lint` — must pass ESLint
+
+### Browser Testing (via browser subagent)
+1. `npm run dev` → open `http://localhost:3000`
+2. Verify hero 3D scene renders and model rotates on scroll
+3. Navigate to `/menu` — test category tab switching
+4. Navigate to `/reservations` — fill form, submit, verify success animation
+5. Navigate to `/contact` — check map embed and animations
+6. Navigate to `/admin/login` — login with test credentials
+7. In `/admin/dashboard` — add a new menu item, verify it appears on `/menu`
+
+### Environment Variables Required
+```
+ADMIN_USER=admin
+ADMIN_PASS=restaurant123
+JWT_SECRET=your_super_secret_key_here
+```

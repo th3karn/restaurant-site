@@ -1,0 +1,122 @@
+[
+  {
+    "id": "1",
+    "name": "Bruschetta al Pomodoro",
+    "category": "Starters",
+    "description": "Crispy sourdough topped with fresh heirloom tomatoes, garlic, and fragrant basil drizzled with extra virgin olive oil.",
+    "price": 12.5,
+    "image": "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=600&q=80",
+    "tags": ["Vegetarian", "Popular"],
+    "available": true
+  },
+  {
+    "id": "2",
+    "name": "Burrata e Prosciutto",
+    "category": "Starters",
+    "description": "Creamy burrata served with thinly sliced prosciutto di Parma, roasted cherry tomatoes, and balsamic glaze.",
+    "price": 18,
+    "image": "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=600&q=80",
+    "tags": ["Chef's Pick"],
+    "available": true
+  },
+  {
+    "id": "3",
+    "name": "Zuppa di Funghi",
+    "category": "Starters",
+    "description": "Velvety wild mushroom soup with truffle oil, topped with herb croutons and crème fraîche.",
+    "price": 14,
+    "image": "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80",
+    "tags": ["Vegetarian", "Gluten-Free"],
+    "available": true
+  },
+  {
+    "id": "4",
+    "name": "Filetto di Manzo",
+    "category": "Mains",
+    "description": "Prime 8oz beef tenderloin, pan-seared to perfection, served with truffle mashed potatoes and seasonal vegetables.",
+    "price": 52,
+    "image": "https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80",
+    "tags": ["Signature", "Gluten-Free"],
+    "available": true
+  },
+  {
+    "id": "5",
+    "name": "Branzino al Limone",
+    "category": "Mains",
+    "description": "Whole roasted Mediterranean sea bass with lemon, capers, herbs, and a white wine reduction.",
+    "price": 44,
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80",
+    "tags": ["Gluten-Free", "Popular"],
+    "available": true
+  },
+  {
+    "id": "6",
+    "name": "Pappardelle al Cinghiale",
+    "category": "Mains",
+    "description": "Hand-rolled pappardelle with slow-braised wild boar ragù, fresh herbs, and aged Pecorino Romano.",
+    "price": 36,
+    "image": "https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=600&q=80",
+    "tags": ["Chef's Pick"],
+    "available": true
+  },
+  {
+    "id": "7",
+    "name": "Melanzane alla Parmigiana",
+    "category": "Mains",
+    "description": "Layers of grilled eggplant with San Marzano tomato, fresh basil, buffalo mozzarella, and Parmigiano-Reggiano.",
+    "price": 28,
+    "image": "https://images.unsplash.com/photo-1625431658736-0eaae3a7e8e0?w=600&q=80",
+    "tags": ["Vegetarian"],
+    "available": true
+  },
+  {
+    "id": "8",
+    "name": "Tiramisù Classico",
+    "category": "Desserts",
+    "description": "Our timeless tiramisu with mascarpone cream, espresso-soaked ladyfingers, and a dusting of dark cocoa.",
+    "price": 14,
+    "image": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80",
+    "tags": ["Popular", "Vegetarian"],
+    "available": true
+  },
+  {
+    "id": "9",
+    "name": "Panna Cotta ai Frutti di Bosco",
+    "category": "Desserts",
+    "description": "Silky vanilla panna cotta crowned with a vibrant wild berry compote and fresh mint.",
+    "price": 12,
+    "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80",
+    "tags": ["Vegetarian", "Gluten-Free"],
+    "available": true
+  },
+  {
+    "id": "10",
+    "name": "Fondente al Cioccolato",
+    "category": "Desserts",
+    "description": "Warm chocolate lava cake with a molten dark chocolate centre, served with Madagascar vanilla gelato.",
+    "price": 16,
+    "image": "https://images.unsplash.com/photo-1611329532992-0b7af2f1b8a3?w=600&q=80",
+    "tags": ["Chef's Pick", "Vegetarian"],
+    "available": true
+  },
+  {
+    "id": "11",
+    "name": "Negroni Classico",
+    "category": "Drinks",
+    "description": "Campari, sweet vermouth, and gin stirred over ice with an orange peel garnish.",
+    "price": 16,
+    "image": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80",
+    "tags": ["Cocktail"],
+    "available": true
+  },
+  {
+    "id": "12",
+    "name": "Acqua di Rosa",
+    "category": "Drinks",
+    "description": "House-crafted rose water spritz with elderflower, cucumber, and a splash of Prosecco.",
+    "price": 14,
+    "image": "https://images.unsplash.com/photo-1560508180-03f285f67ded?w=600&q=80",
+    "tags": ["Signature", "Non-Alcoholic option"],
+    "available": true
+  }
+]
